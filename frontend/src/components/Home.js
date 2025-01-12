@@ -1,6 +1,7 @@
 import React from 'react';
 
 export default function Home() {
+<<<<<<< HEAD
     return (
         <div className="home">
           {/* card */}
@@ -79,4 +80,7 @@ export default function Home() {
           )}
         </div>
       );
+=======
+    return <div>Home</div>
+>>>>>>> a0d988da955c9adc217c5f05a4f650aff055f68f
 } 

@@ -1,4 +1,5 @@
 import React from 'react';
+<<<<<<< HEAD
 import "./Profile.css";
 
 export default function Profie() {
@@ -31,3 +32,9 @@ export default function Profie() {
         </div>
       );
     }  
+=======
+
+export default function Profie() {
+    return <div>Profile </div>;
+}    
+>>>>>>> a0d988da955c9adc217c5f05a4f650aff055f68f

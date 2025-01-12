@@ -4,7 +4,10 @@ const mongoose = require("mongoose");
 const USER = mongoose.model("USER");
 const bcrypt = require("bcrypt")
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> a0d988da955c9adc217c5f05a4f650aff055f68f
 router.get('/', (req, res) => {
     res.send("hello")
 })
@@ -35,6 +38,7 @@ router.post("/signup", (req, res) => {
     })
 })
 
+<<<<<<< HEAD
 router.post("/signin", (req, res) => {
     const { email, password } = req.body;
 
@@ -62,6 +66,8 @@ router.post("/signin", (req, res) => {
     })
 })
 
+=======
+>>>>>>> a0d988da955c9adc217c5f05a4f650aff055f68f
 
 
 

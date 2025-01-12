@@ -5,7 +5,10 @@ const cors = require("cors")
 const mongoose = require("mongoose")
 const mongourl = require("./keys")
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> a0d988da955c9adc217c5f05a4f650aff055f68f
 app.use(cors())
 app.use(express.json())
     
