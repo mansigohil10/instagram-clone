@@ -1,86 +1,60 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
+import "./Profile.css";
 
-export default function Home() {
-<<<<<<< HEAD
-    return (
-        <div className="home">
-          {/* card */}
-          
 
-            return (
-              <div className="card">
-                {/* card header */}
-                <div className="card-header">
-                  <div className="card-pic"></div>
-                  <h5> eyyqj</h5>
-                </div>
-                {/* card image */}
-                <div className="card-image">
+export default function Profie() {
+  var picLink = "https://cdn-icons-png.flaticon.com/128/3177/3177440.png"
+  const [user, setUser] = useState("")
 
-                </div>
-    
-                {/* card content */}
-                <div className="card-content">
-                    <span className="material-symbols-outlined material-symbols-outlined-red"> favorite </span>
-                    <span className="material-symbols-outlined"> favorite</span>
-                  <p>Likes</p>
-                  <p>h </p>
-                  <p style={{ fontWeight: "bold", cursor: "pointer" }} > View all comments
-                  </p>
-                </div>
-    
-                {/* add Comment */}
-                <div className="add-comment">
-                  <span className="material-symbols-outlined">mood</span>
-                  <input type="text"placeholder="Add a comment"/>
-                  <button className="comment" > Post </button>
-                </div>
-              </div>
-            );
-       
-    
-          {/* show Comment */}
-          {(
-            <div className="showComment">
-              <div className="container">
-                <div className="postPic">
-                </div>
-                <div className="details">
-                  {/* card header */}
-                  <div
-                    className="card-header"
-                    style={{ borderBottom: "1px solid #00000029" }}
-                  >
-                    <div className="card-pic">
-                      <img
-                        src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8MnwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-                        alt=""
-                      />
-                    </div>
-                    <h5>rgrh</h5>
-                  </div>
-    
-                  {/* commentSection */}
-                  <div className="comment-section" ></div>
-    
-                  {/* card content */}
-                  <div className="card-content"> </div>
-    
-                  {/* add Comment */}
-                  <div className="add-comment">
-                    <span className="material-symbols-outlined">mood</span>
-                    <input  type="text" placeholder="Add a comment"  />
-                    <button className="comment">Post</button>
-                  </div>
-                </div>
-              </div>
-              <div className="close-comment">
-              </div>
-            </div>
-          )}
+
+  useEffect(() => {
+    fetch(`http://localhost:5000/user/${JSON.parse(localStorage.getItem("user"))._id}`, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result)
+
+        setUser(result.user)
+      });
+  }, []);
+
+  return (
+    <div className="profile">
+      {/* Profile frame */}
+      <div className="profile-frame">
+        {/* profile-pic */}
+        <div className="profile-pic">
+          <img
+            src={user.Photo ? user.Photo : picLink}
+            alt=""
+          />
         </div>
-      );
-=======
-    return <div>Home</div>
->>>>>>> a0d988da955c9adc217c5f05a4f650aff055f68f
-} 
+        {/* profile-data */}
+        <div className="pofile-data">
+          <h1>{JSON.parse(localStorage.getItem("user")).name}</h1>
+          <div className="profile-info" style={{ display: "flex" }}>
+            <p> posts</p>
+            <p>{user.followers ? user.followers.length : "0"} followers</p>
+            <p>{user.following ? user.following.length : "0"} following</p>
+          </div>
+        </div>
+      </div>
+      <hr
+        style={{
+          width: "90%",
+
+          opacity: "0.8",
+          margin: "25px auto",
+        }}
+      />
+      {/* Gallery */}
+      <div className="gallery">
+        
+      </div>
+     
+    </div>
+  );
+}

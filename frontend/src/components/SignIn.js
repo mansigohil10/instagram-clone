@@ -1,13 +1,13 @@
-<<<<<<< HEAD
-import React, { useState} from "react";
+import React, { useState , useContext} from "react";
 import "./SignIn.css";
 import logo from "../img/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
+import { LoginContext } from "../context/LoginContext";
 
 
 export default function SignIn() {
-
+  const { setUserLogin } = useContext(LoginContext)
   const navigate = useNavigate();
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -44,7 +44,8 @@ export default function SignIn() {
           console.log(data)
           localStorage.setItem("jwt", data.token)
           localStorage.setItem("user", JSON.stringify(data.user))
-
+          
+          setUserLogin(true)
           navigate("/")
         }
         console.log(data)
@@ -53,25 +54,11 @@ export default function SignIn() {
 
   return (
     <div className="signIn">
-=======
-import React from 'react';
-import "./SignIn.css";
-import logo from "../img/logo.png";
-import { Link, useNavigate } from "react-router-dom";
-
-export default function SignIn() {
-    return (
-        <div className="signIn">
->>>>>>> a0d988da955c9adc217c5f05a4f650aff055f68f
       <div>
         <div className="loginForm">
           <img className="signUpLogo" src={logo} alt="" />
           <div>
-<<<<<<< HEAD
             <input type="email" name="email" id="email" value={email} placeholder="Email" onChange={(e) => { setEmail(e.target.value) }} />
-=======
-            <input type="email" name="email" id="email"  placeholder="Email" />
->>>>>>> a0d988da955c9adc217c5f05a4f650aff055f68f
           </div>
           <div>
             <input
@@ -79,18 +66,11 @@ export default function SignIn() {
               name="password"
               id="password"
               placeholder="Password"
-<<<<<<< HEAD
               value={password}
               onChange={(e) => { setPassword(e.target.value) }}
             />
           </div>
           <input type="submit" id="login-btn" onClick={() => { postData() }} value="Sign In" />
-=======
-              
-            />
-          </div>
-          <input type="submit" id="login-btn"value="Sign In" />
->>>>>>> a0d988da955c9adc217c5f05a4f650aff055f68f
         </div>
         <div className="loginForm2">
           Don't have an account ?
@@ -100,11 +80,5 @@ export default function SignIn() {
         </div>
       </div>
     </div>
-<<<<<<< HEAD
   );
 }
-=======
-    )
-}   
-
->>>>>>> a0d988da955c9adc217c5f05a4f650aff055f68f
