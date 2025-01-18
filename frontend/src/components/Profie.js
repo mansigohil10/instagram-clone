@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import PostDetail from "./PostDetail";
 import "./Profile.css";
-
+import ProfilePic from "./ProfilePic";
 
 export default function Profie() {
+  var picLink = "https://cdn-icons-png.flaticon.com/128/3177/3177440.png"
   const [pic, setPic] = useState([]);
   const [show, setShow] = useState(false)
   const [posts, setPosts] = useState([]);
+  const [user, setUser] = useState("")
+  const [changePic, setChangePic] = useState(false)
+
 
   const toggleDetails = (posts) => {
     if (show) {
@@ -16,7 +20,16 @@ export default function Profie() {
       setPosts(posts);
     }
   };
- 
+
+  const changeprofile = () => {
+    if (changePic) {
+      setChangePic(false)
+    } else {
+      setChangePic(true)
+    }
+  }
+
+
   useEffect(() => {
     fetch(`http://localhost:5000/user/${JSON.parse(localStorage.getItem("user"))._id}`, {
       headers: {
@@ -26,6 +39,9 @@ export default function Profie() {
       .then((res) => res.json())
       .then((result) => {
         console.log(result)
+        setPic(result.post);
+        setUser(result.user)
+        console.log(pic);
       });
   }, []);
 
@@ -36,6 +52,8 @@ export default function Profie() {
         {/* profile-pic */}
         <div className="profile-pic">
           <img
+            onClick={changeprofile}
+            src={user.Photo ? user.Photo : picLink}
             alt=""
           />
         </div>
@@ -43,9 +61,9 @@ export default function Profie() {
         <div className="pofile-data">
           <h1>{JSON.parse(localStorage.getItem("user")).name}</h1>
           <div className="profile-info" style={{ display: "flex" }}>
-            <p>posts</p>
-            <p> followers</p>
-            <p>following</p>
+            <p>{pic ? pic.length : "0"} posts</p>
+            <p>{user.followers ? user.followers.length : "0"} followers</p>
+            <p>{user.following ? user.following.length : "0"} following</p>
           </div>
         </div>
       </div>
@@ -70,7 +88,10 @@ export default function Profie() {
       {show &&
         <PostDetail item={posts} toggleDetails={toggleDetails} />
       }
-      
+      {
+        changePic &&
+        <ProfilePic changeprofile={changeprofile} />
+      }
     </div>
   );
 }
