@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./Home.css";
+import "../css/Home.css";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
@@ -11,6 +11,8 @@ export default function Home() {
   const [comment, setComment] = useState("");
   const [show, setShow] = useState(false);
   const [item, setItem] = useState([]);
+  let limit = 10
+  let skip = 0
 
   // Toast functions
   const notifyA = (msg) => toast.error(msg);
@@ -21,9 +23,17 @@ export default function Home() {
     if (!token) {
       navigate("./signup");
     }
+fetchPosts()
 
+window.addEventListener("scroll",handleScroll)
+return ()=>{
+  window.removeEventListener("scroll",handleScroll)
+}
+  }, []);
+
+  const fetchPosts = ()=>{
     // Fetching all posts
-    fetch("http://localhost:5000/allposts", {
+    fetch(`/allposts?limit=${limit}&skip=${skip}`, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
@@ -31,10 +41,17 @@ export default function Home() {
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
-        setData(result);
+        setData((data)=>[...data, ...result]);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }
+
+  const handleScroll = ()=>{
+    if(document.documentElement.clientHeight + window.pageYOffset >= document.documentElement.scrollHeight){
+      skip = skip + 10
+      fetchPosts()
+    }
+  }
 
   // to show and hide comments
   const toggleComment = (posts) => {
@@ -47,7 +64,7 @@ export default function Home() {
   };
 
   const likePost = (id) => {
-    fetch("http://localhost:5000/like", {
+    fetch("/like", {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -71,7 +88,7 @@ export default function Home() {
       });
   };
   const unlikePost = (id) => {
-    fetch("http://localhost:5000/unlike", {
+    fetch("/unlike", {
       method: "put",
       headers: {
         "Content-Type": "application/json",
@@ -97,7 +114,7 @@ export default function Home() {
 
   // function to make comment
   const makeComment = (text, id) => {
-    fetch("http://localhost:5000/comment", {
+    fetch("/comment", {
       method: "put",
       headers: {
         "Content-Type": "application/json",

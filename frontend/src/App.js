@@ -3,18 +3,21 @@ import './App.css';
 import React, { createContext, useState } from "react";
 import Navbar from "./components/Navbar";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./components/Home";
+import Home from "./screens/Home";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
-import Profie from "./components/Profie";
+import Profie from "./screens/Profie";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Createpost from './components/Createpost';
+import Createpost from './screens/Createpost';
 import { LoginContext } from "./context/LoginContext";
 import Modal from "./components/Modal";
 import logo from "./logo.svg";
 import UserProfie from "./components/UserProfile";
-import MyFolliwngPost from "./components/MyFollowingPost";
+import MyFolliwngPost from "./screens/MyFollowingPost";
+import { GoogleOAuthProvider } from '@react-oauth/google';
+
+;
 
 function App() {
   const [userLogin, setUserLogin] = useState(false);
@@ -22,6 +25,7 @@ function App() {
   return (   
     <BrowserRouter>
     <div className="App">
+    <GoogleOAuthProvider clientId="351051626851-nfehr69hirecgvmnq161gaue1o4pdt7c.apps.googleusercontent.com">
     <LoginContext.Provider  value={{ setUserLogin , setModalOpen}}>
           <Navbar login={userLogin}/>
           <Routes>
@@ -38,6 +42,7 @@ function App() {
           {modalOpen && <Modal setModalOpen={setModalOpen}></Modal>}
           
         </LoginContext.Provider>
+        </GoogleOAuthProvider>
     </div>
     </BrowserRouter>  
   );
